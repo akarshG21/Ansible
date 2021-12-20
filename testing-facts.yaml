@@ -1,0 +1,9 @@
+---
+  - name: testing facts
+    hosts: all
+    tasks:
+      - name: to know info
+        debug:
+          msg: it means separator
+               the fqdn is "{{ ansible_fqdn }}"
+               the default ip address "{{ ansible_default_ipv4.address }}"

@@ -1,0 +1,15 @@
+---
+  - name: JoyPlay
+    hosts: db
+    tasks:
+      - name: create user
+        user:
+          name: lambda
+          state: present
+  - name: gameplay
+    hosts: db
+    tasks:
+      - name: copy of file
+        copy:
+          src: /etc/hosts
+          dest: /tmp/host

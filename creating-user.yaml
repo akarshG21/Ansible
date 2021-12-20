@@ -1,0 +1,9 @@
+---
+  - name: Creating User 
+    hosts: all
+    tasks:
+      - name: creating a user
+        user:
+          name: admin
+          state: present
+

@@ -1,0 +1,16 @@
+---
+  - name: playwood
+    hosts: all
+    vars:
+      pkg1: httpd
+      srv1: httpd
+    tasks:
+      - name: installing packages
+        yum:
+          name: "{{ pkg1 }}"
+          state: present
+      - name: installing service
+        service:
+          name: "{{ srv1 }}"
+          state: started
+          enabled: yes

@@ -1,0 +1,21 @@
+---
+  - name: superplay
+    hosts: all
+    tasks:
+      - name: variable file
+        include_vars: ~/playbook/var
+      - name: installing package
+        yum:
+          name: "{{ pkg1 }}"
+          state: present
+      - name: installing service
+        service:
+          name: "{{ srv1 }}"
+      - name: creating user
+        user:
+          name: "{{ user1 }}"
+          state: present
+      - name: creating file
+        file:
+          dest: "{{ file1 }}"
+          state: touch

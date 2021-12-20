@@ -1,0 +1,2 @@
+[webserver]
+192.168.223.143 pkg1=vsftpd srv1=csftpd

@@ -1,0 +1,14 @@
+---
+  - name: Installing httpd
+    hosts: db
+    tasks:
+      - name: Installing Package
+        yum:
+          name: httpd
+          state: present
+      - name: Starting Package
+        service:
+          name: httpd
+          state: stopped
+          enabled: no
+      

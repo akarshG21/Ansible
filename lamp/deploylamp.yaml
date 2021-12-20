@@ -1,0 +1,60 @@
+---
+  - name: Deploying LAMP Stack
+    hosts: node4
+    remote_user: root
+    become: true
+
+    tasks:
+      - name: Installing Apache Server
+        yum: name=httpd state=latest
+      
+      - name: Start Apache server service
+        service: name=httpd state=started
+
+      - name: Installing MariaDB server
+        vars:
+          ansible_python_interpreter: /usr/bin/python
+        yum:
+          name:
+          - mariadb*
+          - php
+          - MySQL-python
+          state: latest
+
+      - name: Installing PyMySQL
+        vars:
+          ansible_python_interpreter: /usr/bin/python3 
+        pip:
+          name:
+          - pymysql  
+
+      - name: Start MariaDB Server Service
+        service: name=mariadb state=started
+
+#      - name: Update MariaDB Server root password
+#        mysql_user: 
+#          name: root
+#          host: node4
+#          password: mysql
+#          login_user: root
+#          check_implicit_admin: yes
+#          priv: "*.*:ALL,GRANT"
+
+      - name: Create a new database called Inventory
+        mysql_db: name=final state=present login_user=root login_password=mysql
+
+      - name: Copy SQL File
+        copy: src=/source/servers.sql dest=/tmp/servers.sql
+
+      - name: Create table with data
+        shell: mysql -u root -pmysql final < /tmp/servers.sql
+
+#      - name: Copy PHP files
+#        copy: src=/source/connection.php dest=/var/www/html
+
+      - name: Copy Index.php file
+        copy: src=/source/index.php dest=/var/www/html
+
+      - name: Restart web service
+        service: name=httpd state=restarted
+...
